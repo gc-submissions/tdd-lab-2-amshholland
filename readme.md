@@ -4,7 +4,7 @@
 Run > `npm install`
 
 ### To Run Tests (in development)
-Run > `npm test:dev`
+Run > `npm run test:dev`
 
 ### To View Site in Browser (in development)
 - Run > `npm run build:dev`
