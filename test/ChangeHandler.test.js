@@ -47,4 +47,20 @@ describe("ChangeHandler", function () {
     changeHandler.insertCoin('quarter');
     expect(changeHandler.cashTendered).toBe(.31);
   });
+  test("Muliple function calls continues to add to cashTendered", function () {
+    const changeHandler = new ChangeHandler();
+    changeHandler.isPaymentSufficient();
+    expect(changeHandler.isPaymentSufficient).toBe(true);
+  });
+
+  // isPaymentSufficient:
+  // Returns true if cashTendered more than amountDue.
+  // Returns false if cashTendered less than amountDue.
+  // Returns true if cashTendered equal to amountDue.
+  // giveChange:
+  // 32 change produces: quarters: 1, dimes: 0, nickels: 1, pennies: 2.
+  // 10 change produces: quarters: 0, dimes: 1, nickels: 0, pennies: 0.
+  // 27 change produces: quarters: 1, dimes: 0, nickels: 0, pennies: 2.
+  // 68 change produces: quarters: 2, dimes: 1, nickels: 1, pennies: 3.
+
 })

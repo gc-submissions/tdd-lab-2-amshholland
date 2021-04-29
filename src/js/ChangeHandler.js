@@ -27,14 +27,15 @@ class ChangeHandler {
     if (type === 'penny') {
       this.cashTendered += .01;
     }
-    console.log(this.cashTendered);
   }
-
   /**
    * Returns true if enough coins have been inserted to at least meet the amountDue
    */
   isPaymentSufficient() {
-    // TODO
+    if (this.amountDue > this.cashTendered) {
+      return true;
+    }
+    return false;
   }
 
   giveChange() {
