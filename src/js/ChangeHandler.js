@@ -5,9 +5,9 @@
  */
 class ChangeHandler {
 
-  constructor(amountDue, cashTendered = 0) {
+  constructor(amountDue) {
     this.amountDue = amountDue;
-    this.cashTendered = cashTendered;
+    this.cashTendered = 0;
   }
 
   /**
@@ -16,16 +16,16 @@ class ChangeHandler {
    */
   insertCoin(type) {
     if (type === 'quarter') {
-      this.cashTendered += .25;
+      this.cashTendered += 25;
     }
     if (type === 'dime') {
-      this.cashTendered += .10;
+      this.cashTendered += 10;
     }
     if (type === 'nickel') {
-      this.cashTendered += .05;
+      this.cashTendered += 5;
     }
     if (type === 'penny') {
-      this.cashTendered += .01;
+      this.cashTendered += 1;
     }
   }
   /**
@@ -36,39 +36,36 @@ class ChangeHandler {
   }
 
   giveChange() {
-    let quarters = 0;
-    let dimes = 0;
-    let nickels = 0;
-    let pennies = 0;
+    let changeDue = this.cashTendered - this.amountDue;
+    console.log(changeDue);
+    let change = {
+      quarters: 0,
+      dimes: 0,
+      nickels: 0,
+      pennies: 0
+    }
 
-    while (this.amountDue > 0) {
-      if (this.amountDue >= .25) {
-        this.amountDue += .25;
-        quarters++;
+    while (changeDue > 0) {
+      if (changeDue >= 25) {
+        changeDue -= 25;
+        change.quarters++;
       }
-      else if (this.amountDue >= .10) {
-        this.amountDue += .10;
-        dimes++;
+      else if (changeDue >= 10) {
+        changeDue -= 10;
+        change.dimes++;
       }
-      else if (this.amountDue >= .05) {
-        this.amountDue += .05;
-        nickels++;
+      else if (changeDue >= 5) {
+        changeDue -= 5;
+        change.nickels++;
       }
       else {
-        this.amountDue += .01;
-        pennies++;
+        changeDue -= 1;
+        change.pennies++;
+
       }
     }
-    console.log(
-      `amount due: ${this.amountDue},
-cash tendered: ${this.cashTendered},
-change due: ${this.cashTendered - this.amountDue},
-quarters: ${quarters},
-dimes: ${dimes},
-nickels: ${nickels},
-pennies: ${pennies} `
-    );
-    return `quarters: ${quarters}, dimes: ${dimes},nickels: ${nickels}, pennies: ${pennies}`;
+    console.log(change);
+    return change;
   }
 }
 module.exports = ChangeHandler;
