@@ -32,20 +32,12 @@ class ChangeHandler {
    * Returns true if enough coins have been inserted to at least meet the amountDue
    */
   isPaymentSufficient() {
-    if (this.amountDue > this.cashTendered) {
-      return true;
-    }
-    return false;
+    console.log(this.amountDue <= this.cashTendered)
+
+    return (this.amountDue <= this.cashTendered);
   }
 
   giveChange() {
-    // TODO return the correct change in the following format...
-    return {
-      quarters: 0,
-      dimes: 0,
-      nickels: 0,
-      pennies: 0
-    }
   }
 }
 

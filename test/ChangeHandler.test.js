@@ -47,16 +47,38 @@ describe("ChangeHandler", function () {
     changeHandler.insertCoin('quarter');
     expect(changeHandler.cashTendered).toBe(.31);
   });
-  test("Muliple function calls continues to add to cashTendered", function () {
-    const changeHandler = new ChangeHandler();
+
+  test("Returns true if cashTendered more than amountDue", function () {
+    const changeHandler = new ChangeHandler(.59);
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('nickel');
+    changeHandler.insertCoin('nickel');
     changeHandler.isPaymentSufficient();
-    expect(changeHandler.isPaymentSufficient).toBe(true);
+    expect(changeHandler.isPaymentSufficient).toBeTruthy();
   });
 
-  // isPaymentSufficient:
-  // Returns true if cashTendered more than amountDue.
-  // Returns false if cashTendered less than amountDue.
-  // Returns true if cashTendered equal to amountDue.
+  test("Returns false if cashTendered less than amountDue", function () {
+    const changeHandler = new ChangeHandler(.59);
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('dime');
+    changeHandler.isPaymentSufficient();
+    expect(changeHandler.isPaymentSufficient).toBeFalsy();
+  });
+
+  test("Returns true if cashTendered equal to amountDue", function () {
+    const changeHandler = new ChangeHandler(.59);
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('nickel');
+    changeHandler.insertCoin('penny');
+    changeHandler.insertCoin('penny');
+    changeHandler.insertCoin('penny');
+    changeHandler.insertCoin('penny');
+    changeHandler.isPaymentSufficient();
+    expect(changeHandler.isPaymentSufficient).toBeTruthy();
+  });
+
   // giveChange:
   // 32 change produces: quarters: 1, dimes: 0, nickels: 1, pennies: 2.
   // 10 change produces: quarters: 0, dimes: 1, nickels: 0, pennies: 0.
