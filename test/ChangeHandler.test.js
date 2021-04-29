@@ -79,10 +79,38 @@ describe("ChangeHandler", function () {
     expect(changeHandler.isPaymentSufficient).toBeTruthy();
   });
 
-  // giveChange:
-  // 32 change produces: quarters: 1, dimes: 0, nickels: 1, pennies: 2.
-  // 10 change produces: quarters: 0, dimes: 1, nickels: 0, pennies: 0.
-  // 27 change produces: quarters: 1, dimes: 0, nickels: 0, pennies: 2.
-  // 68 change produces: quarters: 2, dimes: 1, nickels: 1, pennies: 3.
+  test("32 change", function () {
+    const changeHandler = new ChangeHandler(.59);
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('penny');
+    changeHandler.insertCoin('penny');
+    changeHandler.giveChange();
+    expect(changeHandler.giveChange).toBe("quarters: 1, dimes: 0, nickels: 1, pennies: 2");
+  });
 
+  test("10 change", function () {
+    const changeHandler = new ChangeHandler(.59);
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('penny');
+    changeHandler.insertCoin('penny');
+    changeHandler.giveChange();
+    expect(changeHandler.giveChange).toBe("quarters: 0, dimes: 1, nickels: 0, pennies: 0");
+  });
+
+  test("27 change", function () {
+    const changeHandler = new ChangeHandler(.59);
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('penny');
+    changeHandler.insertCoin('penny');
+    changeHandler.giveChange();
+    expect(changeHandler.giveChange).toBe("quarters: 1, dimes: 0, nickels: 0, pennies: 2");
+  });
+  test("68 change", function () {
+    const changeHandler = new ChangeHandler(.59);
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('penny');
+    changeHandler.insertCoin('penny');
+    changeHandler.giveChange();
+    expect(changeHandler.giveChange).toBe("quarters: 2, dimes: 1, nickels: 1, pennies: 3");
+  });
 })

@@ -32,13 +32,43 @@ class ChangeHandler {
    * Returns true if enough coins have been inserted to at least meet the amountDue
    */
   isPaymentSufficient() {
-    console.log(this.amountDue <= this.cashTendered)
-
     return (this.amountDue <= this.cashTendered);
   }
 
   giveChange() {
+    let quarters = 0;
+    let dimes = 0;
+    let nickels = 0;
+    let pennies = 0;
+
+    while (this.amountDue > 0) {
+      if (this.amountDue >= .25) {
+        this.amountDue += .25;
+        quarters++;
+      }
+      else if (this.amountDue >= .10) {
+        this.amountDue += .10;
+        dimes++;
+      }
+      else if (this.amountDue >= .05) {
+        this.amountDue += .05;
+        nickels++;
+      }
+      else {
+        this.amountDue += .01;
+        pennies++;
+      }
+    }
+    console.log(
+      `amount due: ${this.amountDue},
+cash tendered: ${this.cashTendered},
+change due: ${this.cashTendered - this.amountDue},
+quarters: ${quarters},
+dimes: ${dimes},
+nickels: ${nickels},
+pennies: ${pennies} `
+    );
+    return `quarters: ${quarters}, dimes: ${dimes},nickels: ${nickels}, pennies: ${pennies}`;
   }
 }
-
 module.exports = ChangeHandler;
