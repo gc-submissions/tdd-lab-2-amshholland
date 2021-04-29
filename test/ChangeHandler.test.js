@@ -19,25 +19,25 @@ describe("ChangeHandler", function () {
   test("Inserting a quarter adds 25", function () {
     const changeHandler = new ChangeHandler();
     changeHandler.insertCoin('quarter');
-    expect(changeHandler.cashTendered).toBe(.25);
+    expect(changeHandler.cashTendered).toBe(25);
   });
 
   test("Inserting a dime adds 10", function () {
     const changeHandler = new ChangeHandler();
     changeHandler.insertCoin('dime');
-    expect(changeHandler.cashTendered).toBe(.10);
+    expect(changeHandler.cashTendered).toBe(10);
   });
 
   test("Inserting a nickel adds 5", function () {
     const changeHandler = new ChangeHandler();
     changeHandler.insertCoin('nickel');
-    expect(changeHandler.cashTendered).toBe(.05);
+    expect(changeHandler.cashTendered).toBe(5);
   });
 
   test("Inserting a penny adds 1", function () {
     const changeHandler = new ChangeHandler();
     changeHandler.insertCoin('penny');
-    expect(changeHandler.cashTendered).toBe(.01);
+    expect(changeHandler.cashTendered).toBe(1);
   });
 
   test("Muliple function calls continues to add to cashTendered", function () {
@@ -45,29 +45,29 @@ describe("ChangeHandler", function () {
     changeHandler.insertCoin('penny');
     changeHandler.insertCoin('nickel');
     changeHandler.insertCoin('quarter');
-    expect(changeHandler.cashTendered).toBe(.31);
+    expect(changeHandler.cashTendered).toBe(31);
   });
 
   test("Returns true if cashTendered more than amountDue", function () {
-    const changeHandler = new ChangeHandler(.59);
+    const changeHandler = new ChangeHandler(59);
     changeHandler.insertCoin('quarter');
     changeHandler.insertCoin('quarter');
     changeHandler.insertCoin('nickel');
     changeHandler.insertCoin('nickel');
     changeHandler.isPaymentSufficient();
-    expect(changeHandler.isPaymentSufficient).toBeTruthy();
+    expect(changeHandler.isPaymentSufficient()).toBeTruthy();
   });
 
   test("Returns false if cashTendered less than amountDue", function () {
-    const changeHandler = new ChangeHandler(.59);
+    const changeHandler = new ChangeHandler(59);
     changeHandler.insertCoin('quarter');
     changeHandler.insertCoin('dime');
     changeHandler.isPaymentSufficient();
-    expect(changeHandler.isPaymentSufficient).toBeFalsy();
+    expect(changeHandler.isPaymentSufficient()).toBeFalsy();
   });
 
   test("Returns true if cashTendered equal to amountDue", function () {
-    const changeHandler = new ChangeHandler(.59);
+    const changeHandler = new ChangeHandler(59);
     changeHandler.insertCoin('quarter');
     changeHandler.insertCoin('quarter');
     changeHandler.insertCoin('nickel');
@@ -76,13 +76,46 @@ describe("ChangeHandler", function () {
     changeHandler.insertCoin('penny');
     changeHandler.insertCoin('penny');
     changeHandler.isPaymentSufficient();
-    expect(changeHandler.isPaymentSufficient).toBeTruthy();
+    expect(changeHandler.isPaymentSufficient()).toBeTruthy();
   });
 
-  // giveChange:
-  // 32 change produces: quarters: 1, dimes: 0, nickels: 1, pennies: 2.
-  // 10 change produces: quarters: 0, dimes: 1, nickels: 0, pennies: 0.
-  // 27 change produces: quarters: 1, dimes: 0, nickels: 0, pennies: 2.
-  // 68 change produces: quarters: 2, dimes: 1, nickels: 1, pennies: 3.
+  test("32 change", function () {
+    const changeHandler = new ChangeHandler(68);
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('quarter');
+    changeHandler.giveChange();
+    expect(changeHandler.giveChange()).toEqual({ quarters: 1, dimes: 0, nickels: 1, pennies: 2 });
+  });
 
+  test("10 change", function () {
+    const changeHandler = new ChangeHandler(35);
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('dime');
+    changeHandler.insertCoin('dime');
+    changeHandler.giveChange();
+    expect(changeHandler.giveChange()).toEqual({ quarters: 0, dimes: 1, nickels: 0, pennies: 0 });
+  });
+
+  test("27 change", function () {
+    const changeHandler = new ChangeHandler(59);
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('quarter')
+    changeHandler.insertCoin('quarter')
+    changeHandler.insertCoin('dime');
+    changeHandler.insertCoin('penny');
+    changeHandler.giveChange();
+    expect(changeHandler.giveChange()).toEqual({ quarters: 1, dimes: 0, nickels: 0, pennies: 2 });
+  });
+
+  test("68 change", function () {
+    const changeHandler = new ChangeHandler(32);
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('quarter');
+    changeHandler.insertCoin('quarter');
+    changeHandler.giveChange();
+    expect(changeHandler.giveChange()).toEqual({ quarters: 2, dimes: 1, nickels: 1, pennies: 3 });
+  });
 })
